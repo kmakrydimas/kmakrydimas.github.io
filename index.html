@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oscar Hotel | Η πολυτέλεια της απλότητας</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div id="nav-logo" class="logo-gold">Oscar Hotel</div>
+            <div class="menu-toggle" onclick="toggleMenu()">☰</div> <ul class="nav-links" id="nav-links">
+                <li><a href="#rooms" onclick="toggleMenu()">Δωμάτια</a></li>
+                <li><a href="#services" onclick="toggleMenu()">Υπηρεσίες</a></li>
+                <li><a href="photos.html">Φωτογραφίες</a></li>
+                <li><a href="destinations.html">Προορισμοί</a></li>
+                <li><a href="#contact" onclick="toggleMenu()">Επικοινωνία</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline id="hero-video">
+            <source src="hotel-background.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 id="hero-title">Oscar Hotel</h1>
+            <p>Η πολυτέλεια της απλότητας στην Αμφιλοχία</p>
+            <div class="hero-btns">
+                <a href="tel:+302642012345" class="btn phone-btn">📞 ΤΗΛΕΦΩΝΟ</a>
+                <a href="https://www.booking.com" target="_blank" class="btn booking-btn">BOOKING.COM</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="intro">
+        <div class="container">
+            <h2>Καλώς ήρθατε</h2>
+            <p>Το Oscar Hotel προσφέρει μια μοναδική εμπειρία διαμονής στην Αμφιλοχία. Με 25 κομψά δωμάτια και έμφαση στην προσωπική εξυπηρέτηση, αποτελεί τον ιδανικό προορισμό για κάθε ταξιδιώτη.</p>
+        </div>
+        <div class="carousel">
+            <div class="carousel-track">
+                <img src="img1.jpg" alt="Hotel 1">
+                <img src="img2.jpg" alt="Hotel 2">
+                <img src="img3.jpg" alt="Hotel 3">
+                <img src="img4.jpg" alt="Hotel 4">
+                <img src="img1.jpg" alt="Hotel 1">
+                <img src="img2.jpg" alt="Hotel 2">
+            </div>
+        </div>
+    </section>
+
+    <section id="rooms" class="rooms">
+        <div class="container">
+            <h2>Τα Δωμάτιά μας</h2>
+            <div class="rooms-grid">
+                <div class="room-card" onclick="openModal('single')">
+                    <div class="img-container"><img src="single.jpg" alt="Μονόκλινο"></div>
+                    <h3>Μονόκλινο</h3>
+                </div>
+                <div class="room-card" onclick="openModal('double')">
+                    <div class="img-container"><img src="double.jpg" alt="Δίκλινο"></div>
+                    <h3>Δίκλινο</h3>
+                </div>
+                <div class="room-card" onclick="openModal('triple')">
+                    <div class="img-container"><img src="triple.jpg" alt="Τρίκλινο"></div>
+                    <h3>Τρίκλινο</h3>
+                </div>
+                <div class="room-card" onclick="openModal('quad')">
+                    <div class="img-container"><img src="quad.jpg" alt="Τετράκλινο"></div>
+                    <h3>Τετράκλινο</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="section-dark">
+        <div class="container">
+            <div class="section-header">
+                <span class="subtitle">Ανέσεις</span>
+                <h2>Υπηρεσίες Υψηλού Επιπέδου</h2>
+            </div>
+            <div class="services-container">
+                <div class="service-item"><span>📶</span><p>Free WiFi</p></div>
+                <div class="service-item"><span>☕</span><p>Πρωινό</p></div>
+                <div class="service-item"><span>🍸</span><p>Bar</p></div>
+                <div class="service-item"><span>🛎️</span><p>24/7 Reception</p></div>
+                <div class="service-item"><span>❄️</span><p>A/C & Θέρμανση</p></div>
+                <div class="service-item"><span>🚿</span><p>Ιδιωτικό Μπάνιο</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="policy-b2b section-padding">
+        <div class="container grid-2">
+            <div class="policy-box">
+                <h3>Χρήσιμες Πληροφορίες</h3>
+                <div class="info-row">
+                    <strong>Check-in:</strong> 14:00 - 23:00
+                </div>
+                <div class="info-row">
+                    <strong>Check-out:</strong> 08:00 - 12:00
+                </div>
+                <div class="info-row">
+                    <strong>Παιδιά:</strong> < 5 ετών Δωρεάν
+                </div>
+                <div class="info-row">
+                    <strong>Κατοικίδια:</strong> Δεν επιτρέπονται
+                </div>
+            </div>
+            <div class="b2b-box-v2">
+                <div class="b2b-content">
+                    <h3>Εταιρικές Συνεργασίες</h3>
+                    <p>Προσφέρουμε ειδικά πακέτα και προνομιακές τιμές για εταιρείες και τουριστικά γραφεία.</p>
+                    <a href="#contact" class="btn gold-btn">ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="map-section">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345!2d21.16!3d38.86!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDUxJzM2LjAiTiAyMcKwMDknMzYuMCJF!5e0!3m2!1sel!2sgr!4v123456789" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+
+    <footer id="contact">
+        <div class="footer-top">
+            <div class="container footer-grid">
+                <div class="footer-col branding">
+                    <h2 class="gold-text">Oscar Hotel</h2>
+                    <p>Η πολυτέλεια της απλότητας συναντά την ελληνική φιλοξενία στην καρδιά της Αμφιλοχίας.</p>
+                    <div class="social-icons">
+                        <a href="#">FB</a>
+                        <a href="#">IG</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Επικοινωνία</h4>
+                    <p>📍 Αμφιλοχία, ΤΚ 30500</p>
+                    <p>📞 26420 XXXXX</p>
+                    <p>📱 69X XXX XXXX</p>
+                    <p>✉️ info@oscarhotel.gr</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Χρήσιμοι Σύνδεσμοι</h4>
+                    <ul>
+                        <li onclick="openModal('policy')">Πολιτική Ξενοδοχείου</li>
+                        <li onclick="openModal('privacy')">Προσωπικά Δεδομένα</li>
+                        <li onclick="openModal('covid')">Πρωτόκολλα Covid-19</li>
+                        <li><a href="#">Όροι & Προϋποθέσεις</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>ΑΦΜ: 000000000 | ΓΕΜΗ: 000000000000</p>
+                <p>&copy; 2026 Oscar Hotel. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="modal-text"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
