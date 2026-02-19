@@ -3,173 +3,578 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oscar Hotel | Η πολυτέλεια της απλότητας</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>Oscar Hotel | Αμφιλοχία</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Γενικές Ρυθμίσεις (Reset & Variables) --- */
+        :root {
+            --primary-text: #333;
+            --secondary-text: #666;
+            --accent: #bfa67a; /* Χρυσό/Μπεζ για την πολυτέλεια */
+            --bg-light: #f9f9f9;
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --footer-bg: #222;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-text);
+            background-color: #fff;
+            overflow-x: hidden;
+            padding-bottom: 80px; /* Χώρος για το fixed nav */
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        button { cursor: pointer; font-family: inherit; }
+
+        /* --- Hero Section & Logo Animation --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        /* Βίντεο στο φόντο */
+        .hero-video {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.6); /* Σκοτεινιάζει για να φαίνονται τα γράμματα */
+        }
+
+        /* Το Logo που μετακινείται */
+        #main-logo {
+            position: fixed; /* Ξεκινάει ως fixed για να μείνει πάνω όταν σκρολάρουμε */
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            z-index: 1000;
+            transition: all 0.5s ease;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            pointer-events: none; /* Για να μην εμποδίζει τα κλικ αρχικά */
+        }
+
+        /* Κατάσταση Logo όταν σκρολάρουμε (Sticky Header Style) */
+        body.scrolled #main-logo {
+            top: 25px;
+            font-size: 2rem;
+            background: rgba(0, 0, 0, 0.117); /* Προαιρετικό φόντο για ευκρίνεια */
+            padding: 5px 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        .hero-content {
+            z-index: 1;
+            margin-top: 100px; /* Χώρος κάτω από το μεγάλο logo */
+            opacity: 1;
+            transition: opacity 0.5s;
+        }
+
+        body.scrolled .hero-content {
+            opacity: 0; /* Εξαφανίζονται τα υπόλοιπα όταν ανεβαίνει το λογότυπο */
+            pointer-events: none;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons button {
+            padding: 12px 30px;
+            margin: 10px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .hero-buttons button:hover {
+            background: white;
+            color: black;
+        }
+
+        /* --- Πληροφορίες (About) --- */
+        .about-section {
+            padding: 100px 10%;
+            background: white;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin-bottom: 50px;
+            align-items: center;
+        }
+
+        .about-title h2 { font-size: 3rem; }
+        .about-text p { font-size: 1.1rem; line-height: 1.6; color: var(--secondary-text); }
+
+        .photo-strip {
+            display: flex;
+            width: 100%;
+            height: 300px;
+        }
+
+        .photo-strip div {
+            flex-grow: 1;
+            background-size: cover;
+            background-position: center;
+            border-right: 2px solid white;
+            transition: flex-grow 0.5s;
+            /* Placeholder Colors for photos */
+            background-color: #ddd; 
+        }
+        
+        /* Παράδειγμα μεγεθών (διαφορετικά widths) */
+        .p1 { flex-basis: 15%; background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=500&q=80'); }
+        .p2 { flex-basis: 35%; background-image: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=500&q=80'); }
+        .p3 { flex-basis: 20%; background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=500&q=80'); }
+        .p4 { flex-basis: 30%; background-image: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=500&q=80'); }
+
+        .photo-strip div:hover { flex-grow: 2; } /* Εφέ επέκτασης */
+
+        /* --- Διαμονή (Rooms) --- */
+        .rooms-section {
+            padding: 80px 5%;
+            background: var(--bg-light);
+        }
+
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .room-card {
+            position: relative;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .room-bg {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: 0.5s;
+        }
+
+        .room-title {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            font-size: 1.5rem;
+            z-index: 2;
+            transition: 0.5s;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .room-info {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            transition: 0.5s;
+            transform: translateY(20px);
+        }
+
+        /* Hover & Click Effects */
+        .room-card:hover .room-bg { filter: blur(5px); transform: scale(1.1); }
+        /*.room-card:hover .room-title { bottom: 50%; transform: translateY(50%); opacity: 0; }*/
+        
+        .room-card.active .room-info,
+        .room-card:active .room-info { /* Εμφάνιση στο κλικ (ή παρατεταμένο πάτημα σε κινητά) */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .policies {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid #eee;
+            margin-top: 40px;
+        }
+        .policy-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .btn-secondary {
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .btn-booking { background: #003580; } /* Booking color */
+        .btn-maps { background: #1a73e8; } /* Maps color */
+
+        /* --- Παροχές (Amenities) --- */
+        .amenities-section {
+            padding: 80px 10%;
+            background: white;
+        }
+        .amenities-section h2 { text-align: center; margin-bottom: 40px; font-size: 2.5rem; }
+        
+        .amenities-list {
+            columns: 2;
+            column-gap: 50px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .amenities-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1.1rem;
+            break-inside: avoid;
+        }
+
+        /* --- Navigation Bar (Bottom) --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 800px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 2000;
+        }
+
+        .bottom-nav a {
+            color: var(--primary-text);
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .bottom-nav a:hover {
+            background: white;
+            box-shadow: 0 0 10px rgba(191, 166, 122, 0.5); /* Glow effect */
+            color: var(--accent);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--footer-bg);
+            color: white;
+            padding: 60px 10% 20px;
+            font-size: 0.9rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 { color: var(--accent); margin-bottom: 20px; }
+        .footer-col p { margin-bottom: 10px; color: #aaa; }
+        
+        .social-btns button {
+            background: transparent;
+            border: 1px solid #aaa;
+            color: white;
+            padding: 5px 15px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+        .social-btns button:hover { border-color: var(--accent); color: var(--accent); }
+
+        .footer-links button {
+            display: block;
+            background: none;
+            border: none;
+            color: #aaa;
+            margin-bottom: 10px;
+            text-align: left;
+            padding: 0;
+        }
+        .footer-links button:hover { color: white; text-decoration: underline; }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        /* --- Modals (Popups) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            border-radius: 10px;
+            position: relative;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px; right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* --- Mobile Tweaks --- */
+        @media (max-width: 768px) {
+            #main-logo { font-size: 2rem; }
+            .about-grid { grid-template-columns: 1fr; text-align: center; }
+            .amenities-list { columns: 1; }
+            .bottom-nav { 
+                bottom: 0; width: 100%; border-radius: 0; 
+                justify-content: space-around; padding: 15px 5px;
+                font-size: 0.8rem;
+            }
+            .bottom-nav a { padding: 5px; font-size: 0.75rem; }
+            body { padding-bottom: 60px; }
+        }
+    </style>
 </head>
 <body>
 
-    <nav id="navbar">
-        <div class="nav-container">
-            <div id="nav-logo" class="logo-gold">Oscar Hotel</div>
-            <div class="menu-toggle" onclick="toggleMenu()">☰</div> <ul class="nav-links" id="nav-links">
-                <li><a href="#rooms" onclick="toggleMenu()">Δωμάτια</a></li>
-                <li><a href="#services" onclick="toggleMenu()">Υπηρεσίες</a></li>
-                <li><a href="photos.html">Φωτογραφίες</a></li>
-                <li><a href="destinations.html">Προορισμοί</a></li>
-                <li><a href="#contact" onclick="toggleMenu()">Επικοινωνία</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <video autoplay muted loop playsinline id="hero-video">
-            <source src="hotel-background.mp4" type="video/mp4">
+    <header class="hero" id="home">
+        <video class="hero-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80">
+            <source src="hotel.mp4" type="video/mp4">
         </video>
-        <div class="hero-overlay"></div>
+
+        <h1 id="main-logo">Oscar Hotel</h1>
+
         <div class="hero-content">
-            <h1 id="hero-title">Oscar Hotel</h1>
-            <p>Η πολυτέλεια της απλότητας στην Αμφιλοχία</p>
-            <div class="hero-btns">
-                <a href="tel:+302642012345" class="btn phone-btn">📞 ΤΗΛΕΦΩΝΟ</a>
-                <a href="https://www.booking.com" target="_blank" class="btn booking-btn">BOOKING.COM</a>
+            <p class="hero-subtitle">Η πολυτέλεια της απλότητας στην Αμφιλοχία</p>
+            <div class="hero-buttons">
+                <button onclick="window.location.href='tel:+302642000000'">Καλέστε μας</button>
+                <button onclick="window.open('https://booking.com', '_blank')">Booking.com</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="about-section" id="about">
+        <div class="about-grid">
+            <div class="about-title">
+                <h2>Καλώς ήρθατε</h2>
+            </div>
+            <div class="about-text">
+                <p>Στην καρδιά της Αμφιλοχίας, το Oscar Hotel προσφέρει μια μοναδική εμπειρία φιλοξενίας. Συνδυάζοντας τη σύγχρονη αισθητική με την παραδοσιακή ζεστασιά, δημιουργήσαμε έναν χώρο όπου η απλότητα συναντά την πολυτέλεια. Απολαύστε τη διαμονή σας σε ένα περιβάλλον σχεδιασμένο για την απόλυτη χαλάρωση.</p>
+            </div>
+        </div>
+        <div class="photo-strip">
+            <div class="p1"></div>
+            <div class="p2"></div>
+            <div class="p3"></div>
+            <div class="p4"></div>
+        </div>
+    </section>
+
+    <section class="rooms-section" id="rooms">
+        <h2 style="text-align: center; margin-bottom: 30px;">Διαμονή</h2>
+        <div class="rooms-grid">
+            <div class="room-card" onclick="toggleCard(this)">
+                <div class="room-bg" style="background-image: url('https://images.unsplash.com/photo-1631049307204-6c42acae8789?auto=format&fit=crop&w=500&q=80');"></div>
+                <h3 class="room-title">Μονόκλινο</h3>
+                <div class="room-info">
+                    <h3>Classic Single</h3>
+                    <p>Άνετο δωμάτιο ιδανικό για επαγγελματίες.</p>
+                    <small>Κάντε κλικ για κλείσιμο</small>
+                </div>
+            </div>
+            <div class="room-card" onclick="toggleCard(this)">
+                <div class="room-bg" style="background-image: url('https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=500&q=80');"></div>
+                <h3 class="room-title">Δίκλινο</h3>
+                <div class="room-info">
+                    <h3>Superior Double</h3>
+                    <p>Ευρύχωρο δωμάτιο με θέα στη θάλασσα.</p>
+                </div>
+            </div>
+            <div class="room-card" onclick="toggleCard(this)">
+                <div class="room-bg" style="background-image: url('https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=500&q=80');"></div>
+                <h3 class="room-title">Τρίκλινο</h3>
+                <div class="room-info">
+                    <h3>Family Comfort</h3>
+                    <p>Ιδανικό για μικρές οικογένειες ή παρέες.</p>
+                </div>
+            </div>
+            <div class="room-card" onclick="toggleCard(this)">
+                <div class="room-bg" style="background-image: url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=500&q=80');"></div>
+                <h3 class="room-title">Τετράκλινο</h3>
+                <div class="room-info">
+                    <h3>Grand Suite</h3>
+                    <p>Η απόλυτη εμπειρία για μεγάλες οικογένειες.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="policies">
+            <div class="policy-grid">
+                <span><strong>Check-in:</strong> 14:00 - 23:00</span>
+                <span><strong>Check-out:</strong> 07:00 - 12:00</span>
+                <span><strong style="color: #d9534f;">No Pets:</strong> Δεν επιτρέπονται κατοικίδια</span>
+                <span><strong>Παιδιά < 5 ετών:</strong> Δωρεάν (υπάρχοντα κρεβάτια)</span>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-secondary" onclick="window.location.href='tel:+302642000000'">Τηλέφωνο</button>
+                <button class="btn-secondary btn-booking" onclick="window.open('https://booking.com', '_blank')">Booking.com</button>
+                <button class="btn-secondary btn-maps" onclick="window.open('https://maps.google.com', '_blank')">Χάρτης</button>
             </div>
         </div>
     </section>
 
-    <section class="intro">
-        <div class="container">
-            <h2>Καλώς ήρθατε</h2>
-            <p>Το Oscar Hotel προσφέρει μια μοναδική εμπειρία διαμονής στην Αμφιλοχία. Με 25 κομψά δωμάτια και έμφαση στην προσωπική εξυπηρέτηση, αποτελεί τον ιδανικό προορισμό για κάθε ταξιδιώτη.</p>
-        </div>
-        <div class="carousel">
-            <div class="carousel-track">
-                <img src="img1.jpg" alt="Hotel 1">
-                <img src="img2.jpg" alt="Hotel 2">
-                <img src="img3.jpg" alt="Hotel 3">
-                <img src="img4.jpg" alt="Hotel 4">
-                <img src="img1.jpg" alt="Hotel 1">
-                <img src="img2.jpg" alt="Hotel 2">
-            </div>
-        </div>
+    <section class="amenities-section" id="amenities">
+        <h2>Παροχές</h2>
+        <ul class="amenities-list">
+            <li>Wi-Fi υψηλής ταχύτητας (Δωρεάν)</li>
+            <li>Πρωινό (Μπουφές)</li>
+            <li>Κλιματισμός - Θέρμανση</li>
+            <li>Bar / Lounge</li>
+            <li>Δωμάτια μη καπνιζόντων</li>
+            <li>Υπηρεσία δωματίου (Room Service)</li>
+            <li>24ωρη Ρεσεψιόν</li>
+            <li>Υπηρεσία Αφύπνισης</li>
+        </ul>
     </section>
-
-    <section id="rooms" class="rooms">
-        <div class="container">
-            <h2>Τα Δωμάτιά μας</h2>
-            <div class="rooms-grid">
-                <div class="room-card" onclick="openModal('single')">
-                    <div class="img-container"><img src="single.jpg" alt="Μονόκλινο"></div>
-                    <h3>Μονόκλινο</h3>
-                </div>
-                <div class="room-card" onclick="openModal('double')">
-                    <div class="img-container"><img src="double.jpg" alt="Δίκλινο"></div>
-                    <h3>Δίκλινο</h3>
-                </div>
-                <div class="room-card" onclick="openModal('triple')">
-                    <div class="img-container"><img src="triple.jpg" alt="Τρίκλινο"></div>
-                    <h3>Τρίκλινο</h3>
-                </div>
-                <div class="room-card" onclick="openModal('quad')">
-                    <div class="img-container"><img src="quad.jpg" alt="Τετράκλινο"></div>
-                    <h3>Τετράκλινο</h3>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="section-dark">
-        <div class="container">
-            <div class="section-header">
-                <span class="subtitle">Ανέσεις</span>
-                <h2>Υπηρεσίες Υψηλού Επιπέδου</h2>
-            </div>
-            <div class="services-container">
-                <div class="service-item"><span>📶</span><p>Free WiFi</p></div>
-                <div class="service-item"><span>☕</span><p>Πρωινό</p></div>
-                <div class="service-item"><span>🍸</span><p>Bar</p></div>
-                <div class="service-item"><span>🛎️</span><p>24/7 Reception</p></div>
-                <div class="service-item"><span>❄️</span><p>A/C & Θέρμανση</p></div>
-                <div class="service-item"><span>🚿</span><p>Ιδιωτικό Μπάνιο</p></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="policy-b2b section-padding">
-        <div class="container grid-2">
-            <div class="policy-box">
-                <h3>Χρήσιμες Πληροφορίες</h3>
-                <div class="info-row">
-                    <strong>Check-in:</strong> 14:00 - 23:00
-                </div>
-                <div class="info-row">
-                    <strong>Check-out:</strong> 08:00 - 12:00
-                </div>
-                <div class="info-row">
-                    <strong>Παιδιά:</strong> < 5 ετών Δωρεάν
-                </div>
-                <div class="info-row">
-                    <strong>Κατοικίδια:</strong> Δεν επιτρέπονται
-                </div>
-            </div>
-            <div class="b2b-box-v2">
-                <div class="b2b-content">
-                    <h3>Εταιρικές Συνεργασίες</h3>
-                    <p>Προσφέρουμε ειδικά πακέτα και προνομιακές τιμές για εταιρείες και τουριστικά γραφεία.</p>
-                    <a href="#contact" class="btn gold-btn">ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="map-section">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345!2d21.16!3d38.86!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzjCsDUxJzM2LjAiTiAyMcKwMDknMzYuMCJF!5e0!3m2!1sel!2sgr!4v123456789" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-    </div>
 
     <footer id="contact">
-        <div class="footer-top">
-            <div class="container footer-grid">
-                <div class="footer-col branding">
-                    <h2 class="gold-text">Oscar Hotel</h2>
-                    <p>Η πολυτέλεια της απλότητας συναντά την ελληνική φιλοξενία στην καρδιά της Αμφιλοχίας.</p>
-                    <div class="social-icons">
-                        <a href="#">FB</a>
-                        <a href="#">IG</a>
-                    </div>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Oscar Hotel</h3>
+                <p>Οδός Παραλίας 10,<br>Αμφιλοχία, 30500</p>
+            </div>
+            <div class="footer-col" style="text-align: center;">
+                <h3>Επικοινωνία</h3>
+                <p>+30 26420 00000</p>
+                <p>info@oscarhotel.gr</p>
+                <div class="social-btns">
+                    <button>Facebook</button>
+                    <button>Instagram</button>
                 </div>
-                <div class="footer-col">
-                    <h4>Επικοινωνία</h4>
-                    <p>📍 Αμφιλοχία, ΤΚ 30500</p>
-                    <p>📞 26420 XXXXX</p>
-                    <p>📱 69X XXX XXXX</p>
-                    <p>✉️ info@oscarhotel.gr</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Χρήσιμοι Σύνδεσμοι</h4>
-                    <ul>
-                        <li onclick="openModal('policy')">Πολιτική Ξενοδοχείου</li>
-                        <li onclick="openModal('privacy')">Προσωπικά Δεδομένα</li>
-                        <li onclick="openModal('covid')">Πρωτόκολλα Covid-19</li>
-                        <li><a href="#">Όροι & Προϋποθέσεις</a></li>
-                    </ul>
-                </div>
+            </div>
+            <div class="footer-col footer-links" style="text-align: right;">
+                <button onclick="openModal('policy')">Πολιτική Ξενοδοχείου</button>
+                <button onclick="openModal('privacy')">Προσωπικά Δεδομένα</button>
+                <button onclick="openModal('covid')">Covid-19 Μέτρα</button>
             </div>
         </div>
         <div class="footer-bottom">
-            <div class="container">
-                <p>ΑΦΜ: 000000000 | ΓΕΜΗ: 000000000000</p>
-                <p>&copy; 2026 Oscar Hotel. All Rights Reserved.</p>
-            </div>
+            ΓΕΜΗ: 123456789 | ΑΦΜ: 000000000 | © 2024 Oscar Hotel. All rights reserved.
         </div>
     </footer>
 
-    <div id="modal" class="modal">
+    <nav class="bottom-nav">
+        <a href="#rooms">Διαμονή</a>
+        <a href="#amenities">Παροχές</a>
+        <a href="photos.html" target="_blank">Φωτογραφίες</a>
+        <a href="destinations.html" target="_blank">Προορισμοί</a>
+        <a href="#contact">Επικοινωνία</a>
+    </nav>
+
+    <div id="modal-overlay" class="modal" onclick="closeModal(event)">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div id="modal-text"></div>
+            <span class="close-modal" onclick="document.getElementById('modal-overlay').style.display='none'">&times;</span>
+            <h2 id="modal-title">Τίτλος</h2>
+            <p id="modal-body" style="margin-top: 20px;">Κείμενο...</p>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // --- 1. Sticky Logo Scroll Effect ---
+        window.addEventListener('scroll', function() {
+            const body = document.body;
+            // Όταν σκρολάρουμε πάνω από 50px, ενεργοποιείται το class 'scrolled'
+            if (window.scrollY > 50) {
+                body.classList.add('scrolled');
+            } else {
+                body.classList.remove('scrolled');
+            }
+        });
+
+        // --- 2. Card Click Effect (Mobile/Tablet friendly) ---
+        function toggleCard(element) {
+            // Αν έχει ήδη την κλάση active, την αφαιρεί, αλλιώς την προσθέτει
+            element.classList.toggle('active');
+        }
+
+        // --- 3. Modal Logic ---
+        const modal = document.getElementById('modal-overlay');
+        const mTitle = document.getElementById('modal-title');
+        const mBody = document.getElementById('modal-body');
+
+        const content = {
+            'policy': { title: 'Πολιτική Ξενοδοχείου', text: 'Εδώ αναγράφεται η πολιτική ακυρώσεων, οι όροι διαμονής και οι κανόνες του ξενοδοχείου.' },
+            'privacy': { title: 'Προσωπικά Δεδομένα', text: 'Το ξενοδοχείο σέβεται τα προσωπικά σας δεδομένα σύμφωνα με τον κανονισμό GDPR. Δεν χρησιμοποιούμε cookies.' },
+            'covid': { title: 'Covid-19 Μέτρα', text: 'Τηρούμε αυστηρά πρωτόκολλα καθαρισμού και υγιεινής για την ασφάλεια των πελατών και του προσωπικού μας.' }
+        };
+
+        function openModal(type) {
+            mTitle.innerText = content[type].title;
+            mBody.innerText = content[type].text;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
