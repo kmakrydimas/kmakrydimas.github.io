@@ -329,26 +329,45 @@
         }
 
         /* --- Διόρθωση Κουμπιών στη Διαμονή --- */
+        /* --- Διόρθωση Responsive για τα κουμπιά Διαμονής --- */
         .action-buttons {
             display: flex;
             justify-content: center;
             gap: 15px;
             margin-top: 30px;
+            flex-wrap: wrap; /* Επιτρέπει στα κουμπιά να αλλάζουν γραμμή αν δεν χωράνε */
         }
-
+        
         .btn-secondary {
             padding: 12px 25px;
             background: transparent;
             color: var(--primary-text);
-            border: 1.5px solid var(--accent); /* Χρυσό περίγραμμα */
-            border-radius: 30px; /* Στρογγυλεμένα όπως στο hero */
+            border: 1.5px solid var(--accent);
+            border-radius: 30px;
             font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s ease;
+            flex: 1; /* Επιτρέπει στα κουμπιά να μεγαλώνουν ισόποσα */
+            min-width: 150px; /* Ελάχιστο πλάτος για να μην γίνονται πολύ στενά */
+            max-width: 250px; /* Μέγιστο πλάτος για να μην δείχνουν τεράστια */
+            text-align: center;
         }
-
+        
+        /* Mobile Tweaks ειδικά για τα κουμπιά */
+        @media (max-width: 600px) {
+            .action-buttons {
+                flex-direction: column; /* Στοίχιση το ένα κάτω από το άλλο */
+                align-items: center;
+                gap: 10px;
+            }
+        
+            .btn-secondary {
+                width: 100%; /* Πιάνουν όλο το πλάτος του container */
+                max-width: 100%; 
+            }
+        }
         /* Hover εφέ για όλα τα κουμπιά */
         .btn-secondary:hover {
             background: var(--accent);
@@ -1025,4 +1044,5 @@
     </script>
     
 </body>
+
 </html>
